@@ -50,6 +50,8 @@ typedef enum request_t {
 	REQ_PUBKEY, ANS_PUBKEY,
 	SPTPS_PACKET,
 	UDP_INFO, MTU_INFO,
+	/* Custom obond request */
+	HELLO,
 	LAST                                            /* Guardian for the highest request number */
 } request_t;
 
@@ -111,6 +113,7 @@ extern bool send_tcppacket(struct connection_t *, const struct vpn_packet_t *);
 extern bool send_sptps_tcppacket(struct connection_t *, const char*, int);
 extern bool send_udp_info(struct node_t *, struct node_t *);
 extern bool send_mtu_info(struct node_t *, struct node_t *, int);
+extern bool send_hello(struct connection_t *, char *);
 
 /* Request handlers  */
 

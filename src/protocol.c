@@ -55,6 +55,7 @@ static char (*request_name[]) = {
 		"ADD_SUBNET", "DEL_SUBNET",
 		"ADD_EDGE", "DEL_EDGE", "KEY_CHANGED", "REQ_KEY", "ANS_KEY", "PACKET", "CONTROL",
 		"REQ_PUBKEY", "ANS_PUBKEY", "SPTPS_PACKET", "UDP_INFO", "MTU_INFO",
+		"HELLO",
 };
 
 static splay_tree_t *past_request_tree;

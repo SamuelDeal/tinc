@@ -128,6 +128,17 @@ bool control_h(connection_t *c, const char *request) {
 			logcontrol = true;
 			return true;
 
+		case REQ_HELLO: {
+			char message[MAX_STRING_SIZE];
+			if(sscanf(request, "%*d %*d " MAX_STRING, message) != 1) {
+				return send_hello(c, message);
+			}
+			else {
+				logger(DEBUG_ALWAYS, LOG_ERR, "Message is missing for request from %s (%s)", c->name, c->hostname);
+				return false;
+			}
+		}
+
 		default:
 			return send_request(c, "%d %d", CONTROL, REQ_INVALID);
 	}
