@@ -382,3 +382,17 @@ bool mtu_info_h(connection_t *c, const char* request) {
 
 	return send_mtu_info(from, to, mtu);
 }
+
+bool send_msg(connection_t *c, const char *content) {
+	return send_request(c, "%d %s", MSG, content);
+}
+
+bool msg_h(struct connection_t *c, const char *request) {
+	char msg[MAX_STRING_SIZE];
+	if(sscanf(request, "%*d "MAX_STRING, &msg) != 1) {
+		logger(DEBUG_ALWAYS, LOG_ERR, "Got bad %s from %s (%s)", "MSG", c->name, c->hostname);
+		return false;
+	}
+	logger(DEBUG_ALWAYS, LOG_INFO, msg);
+	return true;
+}

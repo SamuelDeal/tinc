@@ -154,6 +154,7 @@ static void usage(bool status) {
 				"  join INVITATION            Join a VPN using an INVITATION\n"
 				"  network [NETNAME]          List all known networks, or switch to the one named NETNAME.\n"
 				"  fsck                       Check the configuration files for problems.\n"
+				"  msg TEXT                   Send a custom text message via a connection\n"
 				"\n");
 		printf("Report bugs to tinc@tinc-vpn.org.\n");
 	}
@@ -1222,6 +1223,28 @@ static int cmd_purge(int argc, char *argv[]) {
 	sendline(fd, "%d %d", CONTROL, REQ_PURGE);
 	if(!recvline(fd, line, sizeof line) || sscanf(line, "%d %d %d", &code, &req, &result) != 3 || code != CONTROL || req != REQ_PURGE || result) {
 		fprintf(stderr, "Could not purge old information.\n");
+		return 1;
+	}
+
+	return 0;
+}
+
+static int cmd_msg(int argc, char *argv[]) {
+	if(argc > 2) {
+		fprintf(stderr, "Too many arguments!\n");
+		return 1;
+	}
+	if(argc <= 1) {
+		fprintf(stderr, "Missing message!\n");
+		return 1;
+	}
+
+	if(!connect_tincd(true))
+		return 1;
+
+	sendline(fd, "%d %d %s", CONTROL, REQ_MSG, argv[1]);
+	if(!recvline(fd, line, sizeof line) || sscanf(line, "%d %d %d", &code, &req, &result) != 3 || code != CONTROL || req != REQ_MSG || result) {
+		fprintf(stderr, "Could not send MSG command.\n");
 		return 1;
 	}
 
@@ -2375,6 +2398,7 @@ static const struct {
 	{"join", cmd_join},
 	{"network", cmd_network},
 	{"fsck", cmd_fsck},
+	{"msg", cmd_msg},
 	{NULL, NULL},
 };
 
