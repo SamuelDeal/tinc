@@ -1244,7 +1244,7 @@ static int cmd_hello(int argc, char *argv[]) {
 
 	sendline(fd, "%d %d %s", CONTROL, REQ_HELLO, argv[1]);
 	if(!recvline(fd, line, sizeof line) || sscanf(line, "%d %d %d", &code, &req, &result) != 3 || code != CONTROL || req != REQ_PURGE || result) {
-		fprintf(stderr, "Bad hello response.\n");
+		fprintf(stderr, "Could not send hello command.\n");
 		return 1;
 	}
 

@@ -129,14 +129,19 @@ bool control_h(connection_t *c, const char *request) {
 			return true;
 
 		case REQ_HELLO: {
+			logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 1 %s (%s)", c->name, c->hostname);
 			char message[MAX_STRING_SIZE];
+			bool success = false;
 			if(sscanf(request, "%*d %*d " MAX_STRING, message) != 1) {
-				return send_hello(c, message);
+				logger(DEBUG_ALWAYS, LOG_ERR, "SAM ERROR: Message is missing for request from %s (%s)", c->name, c->hostname);
+				return control_return(c, REQ_HELLO, -1);
 			}
-			else {
-				logger(DEBUG_ALWAYS, LOG_ERR, "Message is missing for request from %s (%s)", c->name, c->hostname);
-				return false;
+
+			for list_each(connection_t, other, connection_list) {
+				logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 2 %s (%s)", other->name, other->hostname);
+				send_hello(other, message);
 			}
+			return control_ok(c, REQ_HELLO, 1);
 		}
 
 		default:
