@@ -94,15 +94,6 @@ bool termreq_h(connection_t *c, const char *request) {
 	return false;
 }
 
-bool send_hello(connection_t *c, const char *content) {
-	return send_request(c, "%d %s", HELLO, content);
-}
-
-bool hello_h(struct connection_t *c, const char *content) {
-	logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 3 message = '%s' %s (%s)", content, c->name, c->hostname);
-	return true;
-}
-
 bool send_ping(connection_t *c) {
 	c->status.pinged = true;
 	c->last_ping_time = now.tv_sec;
@@ -390,4 +381,13 @@ bool mtu_info_h(connection_t *c, const char* request) {
 	/* Continue passing the MTU value (or a better one if we have it) up the chain. */
 
 	return send_mtu_info(from, to, mtu);
+}
+
+bool send_hello(connection_t *c, const char *content) {
+	return send_request(c, "%d %s", HELLO, content);
+}
+
+bool hello_h(struct connection_t *c, const char *content) {
+	logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 3 message = '%s' %s (%s)", content, c->name, c->hostname);
+	return true;
 }

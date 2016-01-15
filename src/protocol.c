@@ -121,6 +121,9 @@ bool receive_request(connection_t *c, const char *request) {
 	}
 
 	int reqno = atoi(request);
+	logger(DEBUG_ALWAYS, LOG_ERR, "SAM REQUEST: req id = %d", reqno);
+	logger(DEBUG_ALWAYS, LOG_ERR, "SAM REQUEST: req handler size = %d", sizeof(request_handlers));
+	logger(DEBUG_ALWAYS, LOG_ERR, "SAM REQUEST: req request_name size = %d", sizeof(request_name));
 
 	if(reqno || *request == '0') {
 		if((reqno < 0) || (reqno >= LAST) || !request_handlers[reqno]) {
