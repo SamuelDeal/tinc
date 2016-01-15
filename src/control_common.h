@@ -41,7 +41,7 @@ enum request_type {
 	REQ_DUMP_TRAFFIC,
 	REQ_PCAP,
 	REQ_LOG,
-	REQ_HELLO,
+	REQ_MSG,
 };
 
 #define TINC_CTL_VERSION_CURRENT 0

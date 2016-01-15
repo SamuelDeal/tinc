@@ -44,7 +44,7 @@ static bool (*request_handlers[])(connection_t *, const char *) = {
 		NULL, NULL, /* Not "real" requests (yet) */
 		sptps_tcppacket_h,
 		udp_info_h, mtu_info_h,
-		hello_h,
+		msg_h,
 };
 
 /* Request names */
@@ -56,7 +56,7 @@ static char (*request_name[]) = {
 		"ADD_SUBNET", "DEL_SUBNET",
 		"ADD_EDGE", "DEL_EDGE", "KEY_CHANGED", "REQ_KEY", "ANS_KEY", "PACKET", "CONTROL",
 		"REQ_PUBKEY", "ANS_PUBKEY", "SPTPS_PACKET", "UDP_INFO", "MTU_INFO",
-		"HELLO",
+		"MSG",
 };
 
 static splay_tree_t *past_request_tree;

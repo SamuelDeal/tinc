@@ -51,7 +51,7 @@ typedef enum request_t {
 	SPTPS_PACKET,
 	UDP_INFO, MTU_INFO,
 	/* Custom obond request */
-	HELLO,
+	MSG,
 	LAST                                            /* Guardian for the highest request number */
 } request_t;
 
@@ -113,7 +113,7 @@ extern bool send_tcppacket(struct connection_t *, const struct vpn_packet_t *);
 extern bool send_sptps_tcppacket(struct connection_t *, const char*, int);
 extern bool send_udp_info(struct node_t *, struct node_t *);
 extern bool send_mtu_info(struct node_t *, struct node_t *, int);
-extern bool send_hello(struct connection_t *, const char *);
+extern bool send_msg(struct connection_t *, const char *);
 
 /* Request handlers  */
 
@@ -139,6 +139,6 @@ extern bool sptps_tcppacket_h(struct connection_t *, const char *);
 extern bool control_h(struct connection_t *, const char *);
 extern bool udp_info_h(struct connection_t *, const char *);
 extern bool mtu_info_h(struct connection_t *, const char *);
-extern bool hello_h(struct connection_t *, const char *);
+extern bool msg_h(struct connection_t *, const char *);
 
 #endif /* __TINC_PROTOCOL_H__ */
