@@ -44,6 +44,7 @@ static bool (*request_handlers[])(connection_t *, const char *) = {
 		NULL, NULL, /* Not "real" requests (yet) */
 		sptps_tcppacket_h,
 		udp_info_h, mtu_info_h,
+		hello_h,
 };
 
 /* Request names */

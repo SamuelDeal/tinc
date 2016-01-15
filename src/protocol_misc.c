@@ -94,8 +94,13 @@ bool termreq_h(connection_t *c, const char *request) {
 	return false;
 }
 
-bool send_hello(connection_t *c, char *content) {
+bool send_hello(connection_t *c, const char *content) {
 	return send_request(c, "%d %s", HELLO, content);
+}
+
+bool hello_h(struct connection_t *c, const char *content) {
+	logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 3 message = '%s' %s (%s)", content, c->name, c->hostname);
+	return true;
 }
 
 bool send_ping(connection_t *c) {
