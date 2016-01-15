@@ -388,6 +388,11 @@ bool send_hello(connection_t *c, const char *content) {
 }
 
 bool hello_h(struct connection_t *c, const char *content) {
-	logger(DEBUG_ALWAYS, LOG_INFO, "%s", content);
+	char msg[MAX_STRING_SIZE];
+	if(sscanf(request, "%*d "MAX_STRING, &msg) != 1) {
+		logger(DEBUG_ALWAYS, LOG_ERR, "Got bad %s from %s (%s)", "MTU_INFO", c->name, c->hostname);
+		return false;
+	}
+	logger(DEBUG_ALWAYS, LOG_INFO, msg);
 	return true;
 }
