@@ -148,6 +148,12 @@ bool control_h(connection_t *c, const char *request) {
 						logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 2.3 %s (%s)", other->name, other->hostname);
 					}
 				}
+				if(other->status.control){
+					logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 4.1 %s (%s) : CONTROL", other->name, other->hostname);
+				}
+				else {
+					logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 4.2 %s (%s) : Not Control", other->name, other->hostname);
+				}
 				send_hello(other, message);
 			}
 			return control_ok(c, REQ_HELLO);
