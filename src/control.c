@@ -129,31 +129,15 @@ bool control_h(connection_t *c, const char *request) {
 			return true;
 
 		case REQ_HELLO: {
-			logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 1 %s (%s)", c->name, c->hostname);
 			char message[MAX_STRING_SIZE];
 			if(sscanf(request, "%*d %*d " MAX_STRING, message) != 1) {
-				logger(DEBUG_ALWAYS, LOG_ERR, "SAM ERROR: Message is missing for request from %s (%s)", c->name, c->hostname);
+				logger(DEBUG_ALWAYS, LOG_ERR, "Message is missing for request from %s (%s)", c->name, c->hostname);
 				return control_return(c, REQ_HELLO, -1);
 			}
 
 			for list_each(connection_t, other, connection_list) {
-				if(c == other){
-					logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 2.1 %s (%s)", other->name, other->hostname);
-				}
-				else{
-					if(strcmp(other->name, c->name)){
-						logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 2.2 %s (%s)", other->name, other->hostname);
-					}
-					else {
-						logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 2.3 %s (%s)", other->name, other->hostname);
-					}
-				}
-				if(other->status.control){
-					logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 4.1 %s (%s) : CONTROL", other->name, other->hostname);
-				}
-				else {
-					logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 4.2 %s (%s) : Not Control", other->name, other->hostname);
-				}
+				if(other->status.control)
+					continue;
 				send_hello(other, message);
 			}
 			return control_ok(c, REQ_HELLO);
