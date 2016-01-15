@@ -141,7 +141,7 @@ bool control_h(connection_t *c, const char *request) {
 				logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 2 %s (%s)", other->name, other->hostname);
 				send_hello(other, message);
 			}
-			return control_ok(c, REQ_HELLO, 1);
+			return control_ok(c, REQ_HELLO);
 		}
 
 		default:
