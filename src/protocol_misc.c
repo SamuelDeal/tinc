@@ -388,6 +388,6 @@ bool send_hello(connection_t *c, const char *content) {
 }
 
 bool hello_h(struct connection_t *c, const char *content) {
-	logger(DEBUG_ALWAYS, LOG_ERR, "SAM: 3 message = '%s' %s (%s)", content, c->name, c->hostname);
+	logger(DEBUG_ALWAYS, LOG_INFO, "%s", content);
 	return true;
 }
